@@ -1,16 +1,11 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { getUsersCollection } from "@/lib/db";
-// Temporarily comment out MongoDB adapter due to SSL issues
-// import { MongoDBAdapter } from "@auth/mongodb-adapter";
-// import clientPromise from "@/lib/mongodb";
 
-const authOptions: NextAuthOptions = {
-  // Temporarily use JWT sessions instead of database sessions
-  // adapter: MongoDBAdapter(clientPromise) as any,
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -92,7 +87,3 @@ const authOptions: NextAuthOptions = {
   debug: process.env.NODE_ENV === "development",
   secret: process.env.NEXTAUTH_SECRET,
 };
-
-const handler = NextAuth(authOptions);
-
-export { handler as GET, handler as POST };

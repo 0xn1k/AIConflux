@@ -52,13 +52,14 @@ export async function getUserOrCreate(
     user.unlockedModels = updatedUnlockedModels as any;
   }
 
-  return user as User;
+  return user as unknown as User;
 }
 
 export async function getUser(email: string): Promise<User | null> {
   const { getUsersCollection } = await import("@/lib/db");
   const users = await getUsersCollection();
-  return users.findOne({ email }) as Promise<User | null>;
+  const user = await users.findOne({ email });
+  return user as unknown as User | null;
 }
 
 export async function updateUser(

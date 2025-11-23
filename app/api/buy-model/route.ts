@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import Razorpay from "razorpay";
 import crypto from "crypto";
 import { getUser, updateUser } from "@/models/User";
@@ -66,7 +66,15 @@ export async function POST(req: NextRequest) {
 
     // Check if user already owns this model
     const user = await getUser(session.user.email);
-    if (user?.unlockedModels.includes(model)) {
+
+    if (!user) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    if (user.unlockedModels.includes(model)) {
       return NextResponse.json(
         { error: "You already have access to this model" },
         { status: 400 }

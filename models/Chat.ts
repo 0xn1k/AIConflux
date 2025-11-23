@@ -36,11 +36,13 @@ export async function getChatHistory(
     query.sessionId = sessionId;
   }
 
-  return chats
+  const result = await chats
     .find(query)
     .sort({ timestamp: 1 })
     .limit(limit)
-    .toArray() as Promise<Chat[]>;
+    .toArray();
+
+  return result as unknown as Chat[];
 }
 
 export async function getChatSessions(userId: string): Promise<ChatSession[]> {

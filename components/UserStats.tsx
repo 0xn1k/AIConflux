@@ -19,10 +19,10 @@ export default function UserStats() {
     // Listen for real-time updates from ChatInterface
     const handleUserStatsUpdate = (event: any) => {
       const updatedData = event.detail;
-      setUserData({
+      setUserData((prevData) => ({
         tokens: updatedData.tokens,
-        unlockedModels: updatedData.unlockedModels || userData?.unlockedModels || [],
-      });
+        unlockedModels: updatedData.unlockedModels || prevData?.unlockedModels || [],
+      }));
     };
 
     window.addEventListener('userStatsUpdate', handleUserStatsUpdate);

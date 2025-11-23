@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { getUserOrCreate, getUser, updateUser } from "@/models/User";
 import { DEFAULT_FREE_MODELS } from "@/lib/constants";
 import { saveChat } from "@/models/Chat";

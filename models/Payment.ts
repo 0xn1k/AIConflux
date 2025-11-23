@@ -49,11 +49,13 @@ export async function getPaymentHistory(
   const { getPaymentsCollection } = await import("@/lib/db");
   const payments = await getPaymentsCollection();
 
-  return payments
+  const result = await payments
     .find({ userId })
     .sort({ createdAt: -1 })
     .limit(limit)
-    .toArray() as Promise<Payment[]>;
+    .toArray();
+
+  return result as unknown as Payment[];
 }
 
 export async function getPaymentByOrderId(
